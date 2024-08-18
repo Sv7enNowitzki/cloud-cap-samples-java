@@ -19,10 +19,15 @@ entity Books : cuid, managed {
     price        : Decimal(9, 2);
     currency     : Currency;
     rating       : Decimal(2, 1);
+    email        : EMailAddress;
+    phone        : PhoneNumber;
     reviews      : Association to many Reviews
                        on reviews.book = $self;
     isReviewable : TechnicalBooleanFlag not null default true;
 }
+
+type EMailAddress : String;
+type PhoneNumber  : String;
 
 entity Authors : cuid, managed {
     @assert.format : '^\p{Lu}.*' // assert that name starts with a capital letter

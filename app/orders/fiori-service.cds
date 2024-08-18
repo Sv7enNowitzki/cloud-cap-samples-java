@@ -63,6 +63,31 @@ annotate AdminService.Orders with {
     });
 }
 
+annotate AdminService.Orders with {
+    city @(Common : {
+        FieldControl : #Mandatory,
+        Text           : city.name,
+        TextArrangement: #TextOnly,
+        ValueList    : {
+            CollectionPath  : 'City',
+            SearchSupported : true,
+            Parameters      : [
+                {
+                    $Type             : 'Common.ValueListParameterOut',
+                    ValueListProperty : 'ID',
+                    LocalDataProperty : city_ID
+                },
+                {
+                    $Type             : 'Common.ValueListParameterDisplayOnly',
+                    ValueListProperty : 'name'
+                },
+            ]
+        }
+    });
+}
+
+
+
 ////////////////////////////////////////////////////////////////////////////
 //
 //	UI
@@ -140,6 +165,11 @@ annotate AdminService.Orders with @(
             },
             {
                 $Type  : 'UI.ReferenceFacet',
+                Label  : '{i18n>Post Address}',
+                Target : '@UI.FieldGroup#PostAddress'
+            },
+            {
+                $Type  : 'UI.ReferenceFacet',
                 Label  : '{i18n>Details}',
                 Target : '@UI.FieldGroup#Details'
             },
@@ -195,6 +225,16 @@ annotate AdminService.Orders with @(
                 Value : shippingAddress.postalCode,
                 Label : '{i18n>PostalCode}'
             },
+        ]},
+        FieldGroup #PostAddress : {Data : [
+            {
+                Value : city_ID,
+                Label : '{i18n>City}'
+            },
+            {
+                Value : city.name,
+                Label : '{i18n>City Name}'
+            }
         ]}
     },
     Common : {
@@ -209,6 +249,10 @@ annotate AdminService.Orders with @(
         SideEffects #AddressChanges  : {
             SourceProperties : [shippingAddress_ID],
             TargetEntities   : [shippingAddress]
+        },
+        SideEffects #CityChanges  : {
+            SourceProperties : [city_ID],
+            TargetEntities   : [city]
         }
     }
 ) {

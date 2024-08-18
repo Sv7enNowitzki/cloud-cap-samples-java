@@ -3,6 +3,7 @@ using {my.bookshop as my} from '../db/index';
 using {sap.changelog as changelog} from 'com.sap.cds/change-tracking';
 
 extend my.Orders with changelog.changeTracked;
+extend my.Books with changelog.changeTracked;
 
 @path : 'admin'
 service AdminService @(requires : 'admin') {
@@ -12,6 +13,7 @@ service AdminService @(requires : 'admin') {
 
   entity Authors as projection on my.Authors;
   entity Orders  as select from my.Orders;
+  entity City    as projection on my.City;
 
   @cds.persistence.skip
   entity Upload @odata.singleton {
@@ -45,21 +47,44 @@ extend service AdminService with {
 }
 
 // Change-track orders and items
-annotate AdminService.Orders {
+// annotate AdminService.Orders {
+//   OrderNo @changelog;
+// };
+
+// annotate AdminService.Books {
+//   author @changelog:[author.name];
+// };
+
+// annotate AdminService.OrderItems {
+//   quantity @changelog;
+//   book @changelog: [
+//     book.title,
+//     book.isbn
+//   ]
+// };
+
+// Assign identifiers to the tracked entities
+// annotate AdminService.Orders {
+//   Items @changelog:[Items.quantity];
+// };
+
+// annotate AdminService.Orders {
+//   city @changelog:[city.country.name, city.country.code];
+// };
+
+annotate AdminService.Orders with @changelog: [
+  city.country.name,
+  city.country.code
+] {
   OrderNo @changelog;
 };
 
-annotate AdminService.OrderItems {
-  quantity @changelog;
-  book @changelog: [
-    book.title,
-    book.isbn
-  ]
-};
-
-// Assign identifiers to the tracked entities
-annotate AdminService.Orders with @changelog: [OrderNo];
-annotate AdminService.OrderItems with @changelog: [
-    parent.OrderNo,
-    book.title,
-  ];
+// annotate AdminService.OrderItems {
+//   quantity @changelog;
+// }
+// annotate AdminService.Orders with @changelog: [OrderNo];
+// annotate AdminService.OrderItems with @changelog: [
+//     parent.OrderNo,
+//     book.title,
+//     book.author.name
+//   ];

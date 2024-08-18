@@ -37,6 +37,13 @@ annotate ReviewService.Reviews with @(UI : {
             $Type : 'UI.ReferenceFacet',
             Target : '@UI.FieldGroup#Review',
             Label : '{i18n>Review}',
+        },
+        {
+            $Type               : 'UI.ReferenceFacet',
+            ID                  : 'ChangeHistoryFacet',
+            Label               : '{i18n>ChangeHistory}',
+            Target              : 'changes/@UI.PresentationVariant',
+            ![@UI.PartOfPreview]: false
         }
     ],
     FieldGroup #General : {Data : [

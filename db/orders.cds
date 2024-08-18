@@ -15,6 +15,17 @@ entity Orders : cuid, managed {
     buyer    : User;
     total    : Decimal(9, 2)@readonly;
     currency : Currency;
+    city     : Association to one City;
+}
+
+entity City : cuid {
+  name    : String;
+  country : Association to one Country;
+}
+
+entity Country : cuid {
+  name : String;
+  code : String;
 }
 
 entity OrderItems : cuid {

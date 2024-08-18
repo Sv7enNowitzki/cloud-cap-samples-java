@@ -31,6 +31,13 @@ annotate AdminService.Books with @(UI : {
             Label : '{i18n>Admin}',
             Target : '@UI.FieldGroup#Admin'
         },
+        {
+            $Type               : 'UI.ReferenceFacet',
+            ID                  : 'ChangeHistoryFacet',
+            Label               : '{i18n>ChangeHistory}',
+            Target              : 'changes/@UI.PresentationVariant',
+            ![@UI.PartOfPreview]: false
+        }
     ],
     FieldGroup #General : {Data : [
         {Value : title},
