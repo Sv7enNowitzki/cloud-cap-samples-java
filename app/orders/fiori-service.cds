@@ -86,6 +86,29 @@ annotate AdminService.Orders with {
     });
 }
 
+annotate AdminService.Orders with {
+    unitOfMeasure @(Common : {
+        // FieldControl : #Mandatory,
+        Text           : unitOfMeasure.code,
+        TextArrangement: #TextOnly,
+        ValueList    : {
+            CollectionPath  : 'UnitOfMeasures',
+            SearchSupported : true,
+            Parameters      : [
+                {
+                    $Type             : 'Common.ValueListParameterOut',
+                    ValueListProperty : 'code',
+                    LocalDataProperty : unitOfMeasure_code
+                },
+                {
+                    $Type             : 'Common.ValueListParameterDisplayOnly',
+                    ValueListProperty : 'name'
+                },
+            ]
+        }
+    });
+}
+
 
 
 ////////////////////////////////////////////////////////////////////////////
@@ -170,6 +193,11 @@ annotate AdminService.Orders with @(
             },
             {
                 $Type  : 'UI.ReferenceFacet',
+                Label  : '{i18n>Unit Of Measure}',
+                Target : '@UI.FieldGroup#UnitOfMeasure'
+            },
+            {
+                $Type  : 'UI.ReferenceFacet',
                 Label  : '{i18n>Details}',
                 Target : '@UI.FieldGroup#Details'
             },
@@ -235,7 +263,17 @@ annotate AdminService.Orders with @(
                 Value : city.name,
                 Label : '{i18n>City Name}'
             }
-        ]}
+        ]},
+        FieldGroup #UnitOfMeasure : {Data : [
+            {
+                Value : unitOfMeasure_code,
+                Label : '{i18n>Unit Of Measure}'
+            },
+            {
+                Value : unitOfMeasure.name,
+                Label : '{i18n>Name}'
+            }
+        ]},
     },
     Common : {
         SideEffects #ItemsChanges    : {
@@ -253,6 +291,10 @@ annotate AdminService.Orders with @(
         SideEffects #CityChanges  : {
             SourceProperties : [city_ID],
             TargetEntities   : [city]
+        },
+        SideEffects #UnitOfMeasureChanges  : {
+            SourceProperties : [unitOfMeasure_code],
+            TargetEntities   : [unitOfMeasure]
         }
     }
 ) {

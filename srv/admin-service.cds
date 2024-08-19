@@ -14,6 +14,7 @@ service AdminService @(requires : 'admin') {
   entity Authors as projection on my.Authors;
   entity Orders  as select from my.Orders;
   entity City    as projection on my.City;
+  entity UnitOfMeasures    as projection on my.UnitOfMeasures;
 
   @cds.persistence.skip
   entity Upload @odata.singleton {
@@ -72,12 +73,12 @@ extend service AdminService with {
 //   city @changelog:[city.country.name, city.country.code];
 // };
 
-annotate AdminService.Orders with @changelog: [
-  city.country.name,
-  city.country.code
-] {
-  OrderNo @changelog;
-};
+// annotate AdminService.Orders with @changelog: [
+//   city.country.name,
+//   city.country.code
+// ] {
+//   OrderNo @changelog;
+// };
 
 // annotate AdminService.OrderItems {
 //   quantity @changelog;
@@ -88,3 +89,21 @@ annotate AdminService.Orders with @changelog: [
 //     book.title,
 //     book.author.name
 //   ];
+
+// annotate AdminService.OrderItemsNote with @changelog: [
+//     parent.parent.OrderNo,
+//     parent.quantity,
+//     content
+// ] {
+//   content @changelog;
+// };
+
+annotate AdminService.Orders with @changelog: [
+    unitOfMeasure.dimension.code,
+    unitOfMeasure.dimension.name,
+    city.country.name
+] {
+  OrderNo @changelog;
+  unitOfMeasure @changelog:[unitOfMeasure.name];
+  city @changelog:[city.country.name, city.country.code];
+};
