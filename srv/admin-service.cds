@@ -90,20 +90,21 @@ extend service AdminService with {
 //     book.author.name
 //   ];
 
-// annotate AdminService.OrderItemsNote with @changelog: [
-//     parent.parent.OrderNo,
-//     parent.quantity,
-//     content
-// ] {
-//   content @changelog;
-// };
-
-annotate AdminService.Orders with @changelog: [
-    unitOfMeasure.dimension.code,
-    unitOfMeasure.dimension.name,
-    city.country.name
+annotate AdminService.OrderItemsNote with @changelog: [
+    parent.parent.city.country.name,
+    parent.parent.OrderNo,
+    parent.quantity,
+    content
 ] {
-  OrderNo @changelog;
-  unitOfMeasure @changelog:[unitOfMeasure.name];
-  city @changelog:[city.country.name, city.country.code];
+  content @changelog;
 };
+
+// annotate AdminService.Orders with @changelog: [
+//     unitOfMeasure.dimension.code,
+//     unitOfMeasure.dimension.name,
+//     city.country.name
+// ] {
+//   OrderNo @changelog;
+//   unitOfMeasure @changelog:[unitOfMeasure.name];
+//   city @changelog:[city.country.name, city.country.code];
+// };

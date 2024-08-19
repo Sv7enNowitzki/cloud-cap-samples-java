@@ -202,10 +202,15 @@ annotate AdminService.Orders with @(
                 Target : '@UI.FieldGroup#Details'
             },
             {
-                $Type  : 'UI.ReferenceFacet',
+                $Type : 'UI.ReferenceFacet',
                 Label  : '{i18n>OrderItems}',
-                Target : 'Items/@UI.LineItem'
+                Target: 'Items/@UI.PresentationVariant'
             },
+            // {
+            //     $Type  : 'UI.ReferenceFacet',
+            //     Label  : '{i18n>OrderItems}',
+            //     Target : 'Items/@UI.LineItem'
+            // },
             {
                 $Type               : 'UI.ReferenceFacet',
                 ID                  : 'ChangeHistoryFacet',
@@ -318,6 +323,15 @@ annotate AdminService.OrderItems with @(
             Title          : {Value : book.title},
             Description    : {Value : book.descr}
         },
+        PresentationVariant: {
+            Text          : 'Default',
+            Visualizations: ['@UI.LineItem'],
+            SortOrder     : [{
+                $Type     : 'Common.SortOrderType',
+                Property  : ID,
+                Descending: false
+            }]
+        },
         // There is no filterbar for items so the selctionfileds is not needed
         SelectionFields : [book_ID],
         ////////////////////////////////////////////////////////////////////////////
@@ -348,11 +362,30 @@ annotate AdminService.OrderItems with @(
                 Value : amount,
             }
         ],
-        Facets          : [{
-            $Type  : 'UI.ReferenceFacet',
-            Label  : '{i18n>OrderItem}',
-            Target : '@UI.Identification'
-        }, ],
+        Facets          : [
+            {
+                $Type : 'UI.CollectionFacet',
+                // $Type  : 'UI.ReferenceFacet',
+                Label  : '{i18n>OrderItem}',
+                ID     : 'OrderItems',
+                // Target : '@UI.Identification',
+                Facets:[{
+                    $Type : 'UI.ReferenceFacet',
+                    ID    : 'OrderItemsData',
+                    Target: '@UI.FieldGroup#OrderItemsData',
+                    Label : 'OrderItems'
+                }]
+            },
+            {
+                $Type : 'UI.ReferenceFacet',
+                Target: 'notes/@UI.PresentationVariant',
+                Label : '{i18n>OrderItemsNote}'
+            }
+        ],
+        FieldGroup #OrderItemsData: {Data: [
+            {Value: quantity},
+            {Value: amount}
+        ]},
     },
     Common : {
         SideEffects #AmountChanges : {
@@ -376,4 +409,22 @@ annotate AdminService.OrderItems with @(
     book;
 //ERROR ALERT: The following line refering to the parents currency code will lead to a server error
 //@Measures.ISOCurrency:parent.currency.code; //Bind the currency field to the quantity field of the parent
+};
+
+annotate AdminService.OrderItemsNote with @UI: {
+    PresentationVariant: {
+        Text          : 'Default',
+        Visualizations: ['@UI.LineItem'],
+        SortOrder     : [{
+            $Type     : 'Common.SortOrderType',
+            Property  : ID,
+            Descending: false
+        }]
+    },
+    LineItem           : [
+        {
+            Value: content,
+            Label: 'Content'
+        }
+    ],
 };

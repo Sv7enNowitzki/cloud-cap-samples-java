@@ -39,13 +39,13 @@ entity UnitOfMeasuresDimensions : cuid {
 entity OrderItems : cuid {
     parent    : Association to Orders;
     book      : Association to Books @mandatory @assert.target;
-    notes    : Composition of many OrderItemNote
+    notes    : Composition of many OrderItemsNote
                    on notes.parent = $self; 
     quantity    : Integer;
     amount : Decimal(9, 2);
 }
 
-entity OrderItemNote : cuid {
+entity OrderItemsNote : cuid {
   parent    : Association to one OrderItems;
   content   : String;
 }
