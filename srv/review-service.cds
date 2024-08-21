@@ -33,12 +33,13 @@ service ReviewService {
 
 annotate ReviewService.Reviews with @odata.draft.enabled;
 
-// annotate ReviewService.Reviews {
-//   title @changelog;
-// };
-
-// annotate ReviewService.Reviews with @changelog: [book.email, book.phone];
-
-annotate ReviewService.Reviews with {
-   book @changelog: [book.email]
+annotate ReviewService.Reviews with @changelog: [
+    book.email,
+    book.phone
+] {
+    title @changelog;
+    book @changelog: [
+        book.email,
+        book.phone
+    ]
 };

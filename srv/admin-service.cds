@@ -4,6 +4,8 @@ using {sap.changelog as changelog} from 'com.sap.cds/change-tracking';
 
 extend my.Orders with changelog.changeTracked;
 extend my.Books with changelog.changeTracked;
+extend my.OrderItems with changelog.changeTracked;
+extend my.OrderItemsNote with changelog.changeTracked;
 
 @path : 'admin'
 service AdminService @(requires : 'admin') {
@@ -47,48 +49,17 @@ extend service AdminService with {
   entity Languages as projection on CommonLanguages;
 }
 
-// Change-track orders and items
-// annotate AdminService.Orders {
-//   OrderNo @changelog;
-// };
-
-// annotate AdminService.Books {
-//   author @changelog:[author.name];
-// };
-
-// annotate AdminService.OrderItems {
-//   quantity @changelog;
-//   book @changelog: [
-//     book.title,
-//     book.isbn
-//   ]
-// };
-
-// Assign identifiers to the tracked entities
-// annotate AdminService.Orders {
-//   Items @changelog:[Items.quantity];
-// };
-
-// annotate AdminService.Orders {
-//   city @changelog:[city.country.name, city.country.code];
-// };
-
-// annotate AdminService.Orders with @changelog: [
-//   city.country.name,
-//   city.country.code
-// ] {
-//   OrderNo @changelog;
-// };
-
-// annotate AdminService.OrderItems {
-//   quantity @changelog;
-// }
-// annotate AdminService.Orders with @changelog: [OrderNo];
-// annotate AdminService.OrderItems with @changelog: [
-//     parent.OrderNo,
-//     book.title,
-//     book.author.name
-//   ];
+annotate AdminService.Orders with @changelog: [
+    unitOfMeasure.dimension.code,
+    unitOfMeasure.dimension.name,
+    Items.notes.content,
+    city.country.name
+] {
+  OrderNo @changelog;
+  Items @changelog:[Items.quantity, Items.notes.content];
+  unitOfMeasure @changelog:[unitOfMeasure.name];
+  city @changelog:[city.country.name, city.country.code];
+};
 
 annotate AdminService.OrderItemsNote with @changelog: [
     parent.parent.city.country.name,
@@ -99,12 +70,4 @@ annotate AdminService.OrderItemsNote with @changelog: [
   content @changelog;
 };
 
-// annotate AdminService.Orders with @changelog: [
-//     unitOfMeasure.dimension.code,
-//     unitOfMeasure.dimension.name,
-//     city.country.name
-// ] {
-//   OrderNo @changelog;
-//   unitOfMeasure @changelog:[unitOfMeasure.name];
-//   city @changelog:[city.country.name, city.country.code];
-// };
+annotate AdminService.OrderItemsNote with @title: 'Order Items Note';

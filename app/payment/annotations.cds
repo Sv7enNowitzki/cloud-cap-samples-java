@@ -36,6 +36,13 @@ annotate service.Payments with @(
             ID : 'GeneratedFacet1',
             Label : 'General Information',
             Target : '@UI.FieldGroup#GeneratedGroup1',
+        },
+        {
+            $Type               : 'UI.ReferenceFacet',
+            ID                  : 'ChangeHistoryFacet',
+            Label               : '{i18n>ChangeHistory}',
+            Target              : 'changes/@UI.PresentationVariant',
+            ![@UI.PartOfPreview]: false
         }
     ]
 );
