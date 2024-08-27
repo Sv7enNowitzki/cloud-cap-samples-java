@@ -17,7 +17,7 @@
     },
     "dataSources": {
       "mainService": {
-        "uri": "/api/businesstransaction/",
+        "uri": "/api/BusinessTransactionsUiService/",
         "type": "OData",
         "settings": {
           "odataVersion": "4.0"

@@ -1,4 +1,4 @@
-using PaymentsUiService as service from '../../srv/payment';
+using PaymentsUiService as service from '../../srv/ui-service-payment';
 
 annotate service.Payments with @(
     UI.LineItem : [

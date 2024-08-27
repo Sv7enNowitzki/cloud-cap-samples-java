@@ -1,18 +1,16 @@
-namespace my.bookshop;
+using {sap.capire.payment.payments as payments} from './payment/Payments';
+using {sap.capire.payment.payables as payables} from './payment/Payables';
+using {sap.changelog as changelog} from '../../srv/target/cds/com.sap.cds/change-tracking';
 
-// using {my.bookshop as my} from '../db/index';
-using {my.bookshop as payments} from './payment/payments';
-using {my.bookshop as payables} from './payment/Payables';
-using {sap.changelog as changelog} from '../srv/target/cds/com.sap.cds/change-tracking';
-
-// extend payments.Payments with changelog.changeTracked;
-// extend payables.Payables with changelog.changeTracked;
+namespace sap.capire.businessTransactions;
 
 entity BusinessTransactions          as(
     select from payments.Payments{
         key ID,
             displayId,
-            name
+            name,
+            // changes  : Association to many ChangeView
+            //     on changes.objectID = ID AND changes.entity = 'payments.Payments'
     }
 )
 union all
@@ -20,6 +18,8 @@ union all
     select from payables.Payables {
         key ID,
             displayId,
-            name
+            name,
+            // changes  : Association to many ChangeView
+            //    on changes.objectID = ID AND changes.entity = 'payables.Payables'
     }
 );

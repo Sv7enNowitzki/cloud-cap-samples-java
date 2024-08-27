@@ -1,4 +1,4 @@
-using PayablesUiService as service from '../../srv/payable';
+using PayablesUiService as service from '../../srv/ui-service-payable';
 
 annotate service.Payables with @(
     UI.LineItem : [

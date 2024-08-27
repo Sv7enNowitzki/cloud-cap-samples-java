@@ -1,4 +1,4 @@
-using BusinessTransactionsUiService as service from '../../srv/businesstransactions';
+using BusinessTransactionsUiService as service from '../../srv/ui-service-businesstransactions';
 
 annotate service.BusinessTransactions with @(
     UI.LineItem : [

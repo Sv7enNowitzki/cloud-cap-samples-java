@@ -17,7 +17,7 @@
     },
     "dataSources": {
       "mainService": {
-        "uri": "/api/payment/",
+        "uri": "/api/PaymentsUiService/",
         "type": "OData",
         "settings": {
           "odataVersion": "4.0"
