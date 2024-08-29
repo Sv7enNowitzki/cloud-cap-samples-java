@@ -36,7 +36,7 @@ entity UnitOfMeasuresDimensions : cuid {
     name : localized String(20);
 }
 
-@title : 'Order Items'
+// @title : 'Order Items'
 entity OrderItems : cuid {
     parent    : Association to Orders;
     book      : Association to Books @mandatory @assert.target;

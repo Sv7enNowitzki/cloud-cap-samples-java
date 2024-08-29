@@ -70,4 +70,31 @@ annotate AdminService.OrderItemsNote with @changelog: [
   content @changelog;
 };
 
-annotate AdminService.OrderItemsNote with @title: 'Order Items Note';
+// annotate AdminService.OrderItemsNote with @title: 'Order Items Note';
+
+// Object ID of Use Case 1: Annotate single field/multiple fields of associated table(s) as the Object ID
+// annotate AdminService.Orders with @changelog: [
+//   city.name,
+//   unitOfMeasure.code,
+//   unitOfMeasure.name
+// ] {
+//   OrderNo @changelog;
+// }
+
+// Object ID of Use Case 3: Annotate chained associated entities from the current entity as the Object ID
+// annotate AdminService.Orders with @changelog: [
+//   city.country.name,
+//   city.country.code
+// ] {
+//   OrderNo @changelog;
+// }
+
+// Trace changes of Use Case 1: Trace the changes of child nodes from the current entity and display the meaningful data from child nodes (composition relation)
+// annotate AdminService.Orders {
+//   Items @changelog: [Items.quantity];
+// }
+
+// Trace changes of Use Case 3: Trace the changes of chained associated entities from the current entity and display the meaningful data from associated entities (association relation)
+// annotate AdminService.Orders {
+//   city @changelog: [city.country.name, city.country.code];
+// };

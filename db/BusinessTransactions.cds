@@ -1,6 +1,6 @@
 using {sap.capire.payment.payments as payments} from './payment/Payments';
 using {sap.capire.payment.payables as payables} from './payment/Payables';
-using {sap.changelog as changelog} from '../../srv/target/cds/com.sap.cds/change-tracking';
+using {sap.changelog as changelog} from '../srv/target/cds/com.sap.cds/change-tracking';
 
 namespace sap.capire.businessTransactions;
 
@@ -9,8 +9,7 @@ entity BusinessTransactions          as(
         key ID,
             displayId,
             name,
-            // changes  : Association to many ChangeView
-            //     on changes.objectID = ID AND changes.entity = 'payments.Payments'
+            changes
     }
 )
 union all
@@ -19,7 +18,6 @@ union all
         key ID,
             displayId,
             name,
-            // changes  : Association to many ChangeView
-            //    on changes.objectID = ID AND changes.entity = 'payables.Payables'
+            changes
     }
 );

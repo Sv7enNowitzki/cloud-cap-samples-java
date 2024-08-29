@@ -43,3 +43,16 @@ annotate ReviewService.Reviews with @changelog: [
         book.phone
     ]
 };
+
+// Object ID of Use Case 2: Annotate single field/multiple fields of project customized types as the Object ID
+// annotate ReviewService.Reviews with @changelog: [
+//     book.email,
+//     book.phone
+// ] {
+//     title @changelog;
+// }
+
+// Trace changes of Use Case 2: Trace the changes of fields defined by project customized types and display the meaningful data
+// annotate ReviewService.Reviews {
+//     book @changelog: [book.email];
+// }
