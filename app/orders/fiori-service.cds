@@ -428,3 +428,5 @@ annotate AdminService.OrderItemsNote with @UI: {
         }
     ],
 };
+
+annotate AdminService.Orders.changes:up_ with @UI.Hidden;
