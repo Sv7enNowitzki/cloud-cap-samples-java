@@ -164,7 +164,15 @@ annotate AdminService.Orders with @(
             {
                 Value : currency_code,
                 Label : '{i18n>Currency}'
-            }
+            },
+            {
+                Value : datetime,
+                Label : '{i18n>Date Time}'
+            },
+            {
+                Value : timestamp,
+                Label : '{i18n>Time Stamp}'
+            },
         ]},
         FieldGroup #Created         : {Data : [
             {Value : createdBy},

@@ -4,6 +4,7 @@ using {sap.changelog as changelog} from 'com.sap.cds/change-tracking';
 
 // extend my.Orders with changelog.changeTracked;
 extend my.Books with changelog.changeTracked;
+extend my.Orders with changelog.changeTracked;
 
 @path : 'admin'
 service AdminService @(requires : 'admin') {
@@ -56,9 +57,10 @@ annotate AdminService.Books.texts with {
 };
 
 // Change-track orders and items
-// annotate AdminService.Orders {
-//   OrderNo @changelog;
-// };
+annotate AdminService.Orders {
+  datetime @changelog;
+  timestamp @changelog;
+};
 
 // annotate AdminService.OrderItems {
 //   quantity @changelog;

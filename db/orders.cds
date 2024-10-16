@@ -15,6 +15,8 @@ entity Orders : cuid, managed {
     buyer    : User;
     total    : Decimal(9, 2)@readonly;
     currency : Currency;
+    datetime : DateTime;
+    timestamp : Timestamp;
 }
 
 entity OrderItems : cuid {
