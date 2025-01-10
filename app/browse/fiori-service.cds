@@ -46,6 +46,9 @@ annotate CatalogService.Books with @(UI : {
         {Value : title},
         {
             Value : author.name,
+            $Type : 'UI.DataFieldWithIntentBasedNavigation',
+            Action: 'manage',
+            SemanticObject: 'Books',
             Label : '{i18n>Author}'
         },
         {
